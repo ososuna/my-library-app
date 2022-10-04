@@ -1,0 +1,7 @@
+{
+  "name": "my-library-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
