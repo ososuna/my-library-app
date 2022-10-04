@@ -1,6 +1,19 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonFabButton, IonFab } from '@ionic/vue';
+import { add } from 'ionicons/icons';
+import BookCardComponent from '@/components/BookCardComponent.vue';
+const books = [
+  {
+    name: 'Clean Architecture',
+    author: 'Robert C. Martin',
+    description: 'Clean Architecture: A Craftsman\'s Guide to Software Structure and Design is a book on software architecture by Robert C. Martin, published in 2017. The book is a distillation of Martin\'s 40 years of experience in software development and architecture. It is a guide to developing software that is easy to understand, change, and deploy.'
+  },
+  {
+    name: 'A Song of Ice and Fire',
+    author: 'George R. R. Martin',
+    description: 'A Song of Ice and Fire is a series of epic fantasy novels by the American novelist and screenwriter George R. R. Martin. He began the first volume of the series, A Game of Thrones, in 1991, and it was published in 1996. Martin, who initially envisioned the series as a trilogy, has published five out of a planned seven volumes. The most recent volume, A Dance with Dragons, was published in 2011.'
+  }
+];
 </script>
 <template>
   <ion-page>
@@ -9,7 +22,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue
         <ion-title>My Library</ion-title>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
@@ -18,9 +31,17 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue
       </ion-header>
     
       <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <BookCardComponent
+          v-for="(book, index) in books"
+          :key="index"
+          :book="book"
+        />
       </div>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+          <ion-icon :icon="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-content>
   </ion-page>
 </template>
@@ -52,5 +73,9 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue
 
 #container a {
   text-decoration: none;
+}
+
+ion-icon {
+  color: white;
 }
 </style>
