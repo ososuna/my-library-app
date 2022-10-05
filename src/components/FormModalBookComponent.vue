@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, defineProps, ref, onMounted } from 'vue';
+import { PropType, defineProps, ref, onMounted, defineEmits } from 'vue';
 import {
   IonContent,
   IonHeader,
@@ -19,6 +19,10 @@ const { createBook } = useBook();
 const props = defineProps({
   book: {
     type: Object as PropType<Book>,
+    required: false
+  },
+  onSave: {
+    type: Function as PropType<() => void>,
     required: false
   }
 });
@@ -43,6 +47,7 @@ const presentToast = async (message: string) => {
 const saveNewBook = async () => {
   const { ok } = await createBook( bookForm.value );
   if ( ok ) {
+    props.onSave && props.onSave();
     presentToast('Book created successfully &#129303;');
     closeModal();
   }
