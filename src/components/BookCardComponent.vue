@@ -4,7 +4,7 @@ import { defineProps, PropType } from 'vue';
 import Book from '../models/Book';
 defineProps({
   book: {
-    type:Object as PropType<Book>,
+    type: Object as PropType<Book>,
     required: true
   }
 });
@@ -12,7 +12,9 @@ defineProps({
 <template>
   <ion-card>
     <ion-card-header>
-      <ion-card-subtitle>{{ book.author }}</ion-card-subtitle>
+      <ion-card-subtitle>
+        {{ book.author }}
+      </ion-card-subtitle>
       <ion-card-title>{{ book.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
