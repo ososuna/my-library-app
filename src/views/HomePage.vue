@@ -9,6 +9,7 @@ import {
   IonIcon,
   IonFabButton,
   IonFab,
+  IonLoading,
   modalController
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
@@ -19,9 +20,12 @@ import Book from '@/models/Book';
 
 const { getBooks } = useBook();
 const books = ref<Book[]>([]);
+const isLoading = ref(false);
 
 const loadBooks = async () => {
+  isLoading.value = true;
   const { ok, data } = await getBooks();
+  isLoading.value = false;
   if ( ok ) books.value = data;
 };
 const openCreateModal = async () => {
@@ -68,6 +72,10 @@ loadBooks();
           <ion-icon :icon="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
+      <ion-loading
+        :isOpen="isLoading"
+        message="Loading books..."
+      />
     </ion-content>
   </ion-page>
 </template>
