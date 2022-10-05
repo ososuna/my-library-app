@@ -39,7 +39,7 @@ onMounted(() => {
       <ion-buttons slot="start">
         <ion-button color="medium" @click="closeModal">Cancel</ion-button>
       </ion-buttons>
-      <ion-title>Modal</ion-title>
+      <ion-title>{{ props.book ? 'Update' : 'New' }} book</ion-title>
       <ion-buttons slot="end">
         <ion-button @click="closeModal">Send</ion-button>
       </ion-buttons>
