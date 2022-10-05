@@ -11,8 +11,8 @@ import {
   modalController
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
-import CardBookComponent from '@/components/CardBookComponent.vue';
 import FormModalBookComponent from '@/components/FormModalBookComponent.vue';
+import ListBookComponent from '@/components/ListBookComponent.vue';
 import Book from '@/models/Book';
 const books = [
   {
@@ -25,7 +25,7 @@ const books = [
     author: 'George R. R. Martin',
     description: 'A Song of Ice and Fire is a series of epic fantasy novels by the American novelist and screenwriter George R. R. Martin. He began the first volume of the series, A Game of Thrones, in 1991, and it was published in 1996. Martin, who initially envisioned the series as a trilogy, has published five out of a planned seven volumes. The most recent volume, A Dance with Dragons, was published in 2011.'
   }
-];
+] as Book[];
 const openCreateModal = async () => {
   const modal = await modalController.create({
     component: FormModalBookComponent
@@ -58,11 +58,9 @@ const openUpdateModal = async ( book: Book ) => {
       </ion-header>
     
       <div id="container">
-        <CardBookComponent
-          v-for="(book, index) in books"
-          @click="openUpdateModal(book)"
-          :key="index"
-          :book="book"
+        <ListBookComponent
+          :books="books"
+          @onClick="openUpdateModal"
         />
       </div>
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
