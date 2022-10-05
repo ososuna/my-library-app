@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, defineProps, ref, onMounted, defineEmits } from 'vue';
+import { PropType, defineProps, ref, onMounted } from 'vue';
 import {
   IonContent,
   IonHeader,
@@ -10,7 +10,8 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  modalController
+  modalController,
+  toastController
 } from '@ionic/vue';
 import Book from '../models/Book';
 import { useBook } from '../hooks/useBook';
@@ -21,7 +22,6 @@ const props = defineProps({
     required: false
   }
 });
-const emit = defineEmits(['onSave']);
 const bookForm = ref({
   name: '',
   author: '',
@@ -32,10 +32,18 @@ const bookForm = ref({
 const closeModal = () => {
   modalController.dismiss();
 };
+const presentToast = async (message: string) => {
+  const toast = await toastController.create({
+    message,
+    duration: 1500,
+    position: 'bottom'
+  });
+  await toast.present();
+};
 const saveNewBook = async () => {
   const { ok } = await createBook( bookForm.value );
   if ( ok ) {
-    emit('onSave');
+    presentToast('Book created successfully &#129303;');
     closeModal();
   }
 };
