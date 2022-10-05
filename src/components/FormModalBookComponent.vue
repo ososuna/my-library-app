@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, defineProps, ref, onMounted, defineEmits } from 'vue';
+import { PropType, defineProps, ref, onMounted } from 'vue';
 import {
   IonContent,
   IonHeader,
