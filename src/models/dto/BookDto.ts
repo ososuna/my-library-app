@@ -3,7 +3,7 @@ interface BookDto {
   author:       string;
   description:  string;
   bookshelfId:  number;
-  customerId:   number | null;
+  customerId:   number;
 }
 
 export default BookDto;

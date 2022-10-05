@@ -15,7 +15,7 @@ import {
 } from '@ionic/vue';
 import Book from '../models/Book';
 import { useBook } from '../hooks/useBook';
-const { createBook } = useBook();
+const { createBook, updateBook } = useBook();
 const props = defineProps({
   book: {
     type: Object as PropType<Book>,
@@ -44,12 +44,14 @@ const presentToast = async (message: string) => {
   });
   await toast.present();
 };
-const saveNewBook = async () => {
-  const { ok } = await createBook( bookForm.value );
-  if ( ok ) {
-    props.onSave && props.onSave();
-    presentToast('Book created successfully &#129303;');
+const saveBook = async () => {
+  const { ok, message } = props.book
+    ? await updateBook(props.book.id, bookForm.value)
+    : await createBook(bookForm.value);
+  if (ok) {
     closeModal();
+    presentToast(message);
+    props.onSave && props.onSave();
   }
 };
 onMounted(() => {
@@ -64,7 +66,7 @@ onMounted(() => {
       </ion-buttons>
       <ion-title>{{ props.book ? 'Update' : 'New' }} book</ion-title>
       <ion-buttons slot="end">
-        <ion-button @click="saveNewBook">Send</ion-button>
+        <ion-button @click="saveBook">Send</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
