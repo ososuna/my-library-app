@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonFabButton, IonFab, IonModal, IonButton, IonButtons, IonLabel, IonInput, IonItem, modalController } from '@ionic/vue';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonIcon,
+  IonFabButton,
+  IonFab,
+  modalController
+} from '@ionic/vue';
 import { add } from 'ionicons/icons';
-import BookCardComponent from '@/components/BookCardComponent.vue';
-import BookFormModalComponent from '@/components/BookFormModalComponent.vue';
+import CardBookComponent from '@/components/CardBookComponent.vue';
+import FormModalBookComponent from '@/components/FormModalBookComponent.vue';
 import Book from '@/models/Book';
-
 const books = [
   {
     name: 'Clean Architecture',
@@ -19,13 +28,13 @@ const books = [
 ];
 const openCreateModal = async () => {
   const modal = await modalController.create({
-    component: BookFormModalComponent
+    component: FormModalBookComponent
   });
   return modal.present();
 };
 const openUpdateModal = async ( book: Book ) => {
   const modal = await modalController.create({
-    component: BookFormModalComponent,
+    component: FormModalBookComponent,
     componentProps: {
      book
     }
@@ -49,7 +58,7 @@ const openUpdateModal = async ( book: Book ) => {
       </ion-header>
     
       <div id="container">
-        <BookCardComponent
+        <CardBookComponent
           v-for="(book, index) in books"
           @click="openUpdateModal(book)"
           :key="index"
