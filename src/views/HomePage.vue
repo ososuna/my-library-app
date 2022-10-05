@@ -22,9 +22,7 @@ const books = ref<Book[]>([]);
 
 const loadBooks = async () => {
   const { ok, data } = await getBooks();
-  if ( ok ) {
-    books.value = data;
-  }
+  if ( ok ) books.value = data;
 };
 const openCreateModal = async () => {
   const modal = await modalController.create({
@@ -40,6 +38,10 @@ const openUpdateModal = async ( book: Book ) => {
     }
   });
   return modal.present();
+};
+
+FormModalBookComponent.beforeUnmount = () => {
+  loadBooks();
 };
 
 loadBooks();

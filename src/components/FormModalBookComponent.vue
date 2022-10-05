@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, defineProps, ref, onMounted } from 'vue';
+import { PropType, defineProps, ref, onMounted, defineEmits } from 'vue';
 import {
   IonContent,
   IonHeader,
@@ -13,24 +13,34 @@ import {
   modalController
 } from '@ionic/vue';
 import Book from '../models/Book';
+import { useBook } from '../hooks/useBook';
+const { createBook } = useBook();
 const props = defineProps({
   book: {
     type: Object as PropType<Book>,
     required: false
   }
 });
+const emit = defineEmits(['onSave']);
 const bookForm = ref({
   name: '',
   author: '',
-  description: ''
+  description: '',
+  bookshelfId: 1,
+  customerId: 1
 });
 const closeModal = () => {
   modalController.dismiss();
 };
-onMounted(() => {
-  if (props.book) {
-    bookForm.value = props.book;
+const saveNewBook = async () => {
+  const { ok } = await createBook( bookForm.value );
+  if ( ok ) {
+    emit('onSave');
+    closeModal();
   }
+};
+onMounted(() => {
+  if (props.book) bookForm.value = props.book;
 });
 </script>
 <template>
@@ -41,7 +51,7 @@ onMounted(() => {
       </ion-buttons>
       <ion-title>{{ props.book ? 'Update' : 'New' }} book</ion-title>
       <ion-buttons slot="end">
-        <ion-button @click="closeModal">Send</ion-button>
+        <ion-button @click="saveNewBook">Send</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
