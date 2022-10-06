@@ -16,7 +16,6 @@ export const useBook = () => {
       }
     }
   }
-
   const createBook = async( book: BookDto ) => {
     try {
       await bookApi.post('', book);
@@ -30,7 +29,6 @@ export const useBook = () => {
       }
     }
   }
-
   const updateBook = async( id: number, book: BookDto ) => {
     try {
       await bookApi.put(`/${id}`, book);
@@ -44,7 +42,6 @@ export const useBook = () => {
       }
     }
   }
-
   const deleteBook = async( id: number ) => {
     try {
       await bookApi.delete(`/${id}`);
@@ -58,7 +55,6 @@ export const useBook = () => {
       }
     }
   }
-
   return {
     getBooks,
     createBook,

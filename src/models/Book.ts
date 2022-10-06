@@ -6,5 +6,4 @@ interface Book {
   bookshelfId:  number;
   customerId:   number;
 }
-
 export default Book;
