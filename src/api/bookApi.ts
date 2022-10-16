@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const bookApi = axios.create({
-  baseURL: 'https://mylibrary-bobbytables.herokuapp.com/api/v1/book',
+  baseURL: process.env.VUE_APP_API_URI + '/book',
 });
 
 export default bookApi;
