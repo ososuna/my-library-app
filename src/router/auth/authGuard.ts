@@ -8,7 +8,7 @@ const isAuthGuard = async (
 ) => {
   const { ok } = await store.dispatch('auth/checkAuth');
   if( ok ) next()
-  else next({ name: 'log-in' });
+  else next({ name: 'auth' });
 }
 
 export default isAuthGuard;
