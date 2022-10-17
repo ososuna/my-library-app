@@ -8,7 +8,6 @@ import {
   IonFooter,
   IonText
 } from '@ionic/vue';
-import LoginFormComponent from '@/components/auth/LoginFormComponent.vue';
 
 const APP_NAME = process.env.VUE_APP_NAME;
 
@@ -26,13 +25,13 @@ const APP_NAME = process.env.VUE_APP_NAME;
           <ion-title size="large">{{ APP_NAME }}</ion-title>
         </ion-toolbar>
       </ion-header>
-      <LoginFormComponent />
+      <router-view />
     </ion-content>
     <ion-footer>
     <ion-toolbar>
       <ion-title size="small">
         <ion-text>
-          Don't have an account? <ion-text color="primary">Sign in</ion-text>
+          Don't have an account? <ion-text color="primary">Sign up</ion-text>
         </ion-text>
       </ion-title>
     </ion-toolbar>
