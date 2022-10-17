@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import {
-IonContent,
-IonHeader,
-IonPage,
-IonTitle,
-IonToolbar
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonFooter,
+  IonText
 } from '@ionic/vue';
+import LoginFormComponent from '@/components/auth/LoginFormComponent.vue';
 
 const APP_NAME = process.env.VUE_APP_NAME;
 
@@ -23,6 +26,16 @@ const APP_NAME = process.env.VUE_APP_NAME;
           <ion-title size="large">{{ APP_NAME }}</ion-title>
         </ion-toolbar>
       </ion-header>
+      <LoginFormComponent />
     </ion-content>
+    <ion-footer>
+    <ion-toolbar>
+      <ion-title size="small">
+        <ion-text>
+          Don't have an account? <ion-text color="primary">Sign in</ion-text>
+        </ion-text>
+      </ion-title>
+    </ion-toolbar>
+  </ion-footer>
   </ion-page>
 </template>
