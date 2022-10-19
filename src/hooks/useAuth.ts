@@ -1,15 +1,27 @@
 import { useStore } from 'vuex';
-import LoginRequest from '../models/auth/LoginRequest';
+import LoginRequest from '@/models/auth/LoginRequest';
 
 export const useAuth = () => {
 
   const store = useStore();
+  
+  const checkAuth = async() => {
+    const resp = await store.dispatch( 'auth/checkAuth' );
+    return resp;
+  }
 
   const loginUser = async( user: LoginRequest ) => {
     return await store.dispatch('auth/loginUser', user);
   }
 
-  return {
-    loginUser
+  const logout = () => {
+    store.commit( 'auth/logout' );
   }
+
+  return {
+    checkAuth,
+    loginUser,
+    logout
+  }
+
 }
