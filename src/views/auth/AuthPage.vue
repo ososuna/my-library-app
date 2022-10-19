@@ -36,10 +36,16 @@ const router = useRouter();
     <ion-toolbar>
       <ion-title size="small">
         <ion-text v-if="route.name==='log-in'">
-          Don't have an account? <ion-text color="primary" @click="router.push({ name: 'sign-up' })">Sign up</ion-text>
+          Don't have an account?
+          <ion-text color="primary" @click="router.push({ name: 'sign-up' })">
+            Sign up
+          </ion-text>
         </ion-text>
         <ion-text v-else-if="route.name==='sign-up'">
-          Already have an account? <ion-text color="primary" @click="router.push({ name: 'log-in' })">Log in</ion-text>
+          Already have an account?
+          <ion-text color="primary" @click="router.push({ name: 'log-in' })">
+            Log in
+          </ion-text>
         </ion-text>
       </ion-title>
     </ion-toolbar>
