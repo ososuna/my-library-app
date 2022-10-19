@@ -16,14 +16,6 @@ const route = useRoute();
 
 const router = useRouter();
 
-const changeLogInSignUpPage = () => {
-  if (route.name === 'log-in') {
-    router.push({ name: 'sign-up' });
-  } else {
-    router.push({ name: 'log-in' });
-  }
-};
-
 </script>
 <template>
   <ion-page>
@@ -44,10 +36,10 @@ const changeLogInSignUpPage = () => {
     <ion-toolbar>
       <ion-title size="small">
         <ion-text v-if="route.name==='log-in'">
-          Don't have an account? <ion-text color="primary" @click="changeLogInSignUpPage">Sign up</ion-text>
+          Don't have an account? <ion-text color="primary" @click="router.push({ name: 'sign-up' })">Sign up</ion-text>
         </ion-text>
         <ion-text v-else-if="route.name==='sign-up'">
-          Already have an account? <ion-text color="primary" @click="changeLogInSignUpPage">Log in</ion-text>
+          Already have an account? <ion-text color="primary" @click="router.push({ name: 'log-in' })">Log in</ion-text>
         </ion-text>
       </ion-title>
     </ion-toolbar>
