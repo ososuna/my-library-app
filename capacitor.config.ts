@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'My Library',
+  appName: 'Spring Book',
   webDir: 'dist',
   bundledWebRuntime: false
 };
