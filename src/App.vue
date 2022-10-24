@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import { IonApp, IonRouterOutlet, IonLoading, toastController } from '@ionic/vue';
+import { useAuth } from '@/hooks/useAuth';
 import { useUi } from '@/hooks/useUi';
 
+const { checkAuth } = useAuth();
 const { alert, loading } = useUi();
 
 const presentToast = async (message: string) => {
@@ -20,6 +22,7 @@ watch(alert, () => {
   }
 });
 
+checkAuth();
 </script>
 <template>
   <ion-app>
