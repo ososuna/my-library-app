@@ -11,9 +11,11 @@ import {
   IonButton  
 } from '@ionic/vue';
 import { useAuth } from '@/hooks/useAuth';
+import { useUi } from '@/hooks/useUi';
 import LoginRequest from '@/models/auth/LoginRequest';
 
 const { loginUser } = useAuth();
+const { setAlertMessage } = useUi();
 
 const router = useRouter();
 
@@ -27,7 +29,7 @@ const onLogIn = async() => {
   if( ok ) {
     router.push({ name: 'home' });
   } else {
-    console.log( message );
+    setAlertMessage( message );
   }
 };
 

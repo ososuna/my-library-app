@@ -13,7 +13,7 @@ export const loginUser = async( { commit }: { commit: Commit }, user: LoginReque
   } catch ( error ) {
     if ( axios.isAxiosError( error ) ) {
       const { message } = error.response?.data as any || 'Ha ocurrido un error';
-      return { ok: false, message };
+      return { ok: false, message: message+' &#128531;'  };
     } else {
       return { ok: false, message: 'Ha ocurrido un error' };
     }
