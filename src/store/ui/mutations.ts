@@ -1,6 +1,6 @@
 import UiState from '@/models/state/UiState';
 
-export const setLoading = ( state: UiState, { show = true, message = '' } ) => {
+export const setLoading = ( state: UiState, { show = false, message = '' } ) => {
   state.loading = { show, message };
 }
 

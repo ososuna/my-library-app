@@ -1,6 +1,6 @@
-import Alert from '@/models/ui/UiComponent';
+import UiComponent from '@/models/ui/UiComponent';
 
 export default () => ({
-  alert:      {} as Alert,
-  loading:    false
+  alert:      {} as UiComponent,
+  loading:    {} as UiComponent
 });

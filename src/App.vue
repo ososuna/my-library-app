@@ -3,7 +3,7 @@ import { watch } from 'vue';
 import { IonApp, IonRouterOutlet, IonLoading, toastController } from '@ionic/vue';
 import { useUi } from '@/hooks/useUi';
 
-const { alert, isLoading } = useUi();
+const { alert, loading } = useUi();
 
 const presentToast = async (message: string) => {
   const toast = await toastController.create({
@@ -25,8 +25,9 @@ watch(alert, () => {
   <ion-app>
     <ion-router-outlet />
       <ion-loading
-        :isOpen="isLoading"
-        message="Loading books..."
+        v-if="loading.show"
+        :isOpen="loading.show"
+        :message="loading.message"
       />
   </ion-app>
 </template>
