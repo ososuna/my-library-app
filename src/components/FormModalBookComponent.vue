@@ -10,12 +10,13 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  modalController,
-  toastController
+  modalController
 } from '@ionic/vue';
 import Book from '../models/Book';
 import { useBook } from '../hooks/useBook';
+import { useUi } from '../hooks/useUi';
 const { createBook, updateBook } = useBook();
+const { setAlertMessage } = useUi();
 const props = defineProps({
   book: {
     type: Object as PropType<Book>,
@@ -36,21 +37,13 @@ const bookForm = ref({
 const closeModal = () => {
   modalController.dismiss();
 };
-const presentToast = async (message: string) => {
-  const toast = await toastController.create({
-    message,
-    duration: 1500,
-    position: 'bottom'
-  });
-  await toast.present();
-};
 const saveBook = async () => {
   const { ok, message } = props.book
     ? await updateBook(props.book.id, bookForm.value)
     : await createBook(bookForm.value);
   if (ok) {
     closeModal();
-    presentToast(message);
+    setAlertMessage(message);
     props.onSave && props.onSave();
   }
 };
