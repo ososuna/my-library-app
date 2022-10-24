@@ -1,4 +1,4 @@
-import Alert from '@/models/ui/Alert';
+import Alert from '@/models/ui/UiComponent';
 
 export default () => ({
   alert:      {} as Alert,

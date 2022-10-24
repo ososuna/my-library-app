@@ -9,25 +9,26 @@ import {
   IonIcon,
   IonFabButton,
   IonFab,
-  IonLoading,
   modalController
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import FormModalBookComponent from '@/components/FormModalBookComponent.vue';
 import ListBookComponent from '@/components/ListBookComponent.vue';
 import { useBook } from '../../hooks/useBook';
+import { useUi } from '../../hooks/useUi';
 import Book from '@/models/Book';
 
 const APP_NAME = process.env.VUE_APP_NAME;
 
 const { getBooks } = useBook();
-const isLoading = ref(false);
+const { setLoading } = useUi();
+
 const books = ref<Book[]>([]);
 
 const init = async () => {
-  isLoading.value = true;
+  setLoading(true, 'Loading books...');
   await loadBooks();
-  isLoading.value = false;
+  setLoading(false, '');
 };
 
 const loadBooks = async () => {
@@ -84,10 +85,6 @@ init();
           <ion-icon :icon="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <ion-loading
-        :isOpen="isLoading"
-        message="Loading books..."
-      />
     </ion-content>
   </ion-page>
 </template>

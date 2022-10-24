@@ -1,8 +1,8 @@
-import Alert from '@/models/ui/Alert';
+import UiComponent from '@/models/ui/UiComponent';
 
 interface UiState {
-  alert:   Alert
-  loading: boolean;
+  alert:   UiComponent
+  loading: UiComponent;
 }
 
 export default UiState;

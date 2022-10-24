@@ -5,8 +5,8 @@ export const useUi = () => {
 
   const store = useStore();
 
-  const setLoading = ( loading: boolean ) => {
-    store.dispatch( 'ui/setLoading', loading );
+  const setLoading = ( show: boolean, message: string ) => {
+    store.dispatch( 'ui/setLoading', { show, message } );
   }
 
   const setAlertMessage = ( message: string ) => {
