@@ -9,11 +9,14 @@ import {
   IonIcon,
   IonFabButton,
   IonFab,
+  IonMenuButton,
+  IonButtons,
   modalController
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import FormModalBookComponent from '@/components/FormModalBookComponent.vue';
 import ListBookComponent from '@/components/ListBookComponent.vue';
+import MenuComponent from '@/components/shared/MenuComponent.vue';
 import { useBook } from '../../hooks/useBook';
 import { useUi } from '../../hooks/useUi';
 import Book from '@/models/Book';
@@ -64,9 +67,13 @@ init();
 
 </script>
 <template>
-  <ion-page>
+  <MenuComponent />
+  <ion-page id="main-content">
     <ion-header :translucent="true">
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
         <ion-title>{{ APP_NAME }}</ion-title>
       </ion-toolbar>
     </ion-header>
