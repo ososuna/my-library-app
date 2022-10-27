@@ -16,7 +16,6 @@ import {
 import { add } from 'ionicons/icons';
 import FormModalBookComponent from '@/components/FormModalBookComponent.vue';
 import ListBookComponent from '@/components/ListBookComponent.vue';
-import MenuComponent from '@/components/shared/MenuComponent.vue';
 import { useBook } from '../../hooks/useBook';
 import { useUi } from '../../hooks/useUi';
 import Book from '@/models/Book';
@@ -67,7 +66,6 @@ init();
 
 </script>
 <template>
-  <MenuComponent />
   <ion-page id="main-content">
     <ion-header :translucent="true">
       <ion-toolbar>

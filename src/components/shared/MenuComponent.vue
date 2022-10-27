@@ -9,9 +9,12 @@ import {
   IonItem,
   IonLabel
 } from '@ionic/vue';
+import { useAuth } from '@/hooks/useAuth';
+const { currentAuthState } = useAuth();
+console.log( currentAuthState.value );
 </script>
 <template>
-  <ion-menu content-id="main-content">
+  <ion-menu :disabled="currentAuthState!=='authenticated'" content-id="main-content">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
