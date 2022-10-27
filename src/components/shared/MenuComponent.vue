@@ -9,7 +9,8 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonIcon
+  IonIcon,
+  modalController
 } from '@ionic/vue';
 import {
   personCircleOutline,
@@ -18,6 +19,7 @@ import {
 } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 import { useAuth } from '@/hooks/useAuth';
+import EditUserModalComponent from '@/components/user/EditUserModalComponent.vue';
 const { currentAuthState, logout } = useAuth();
 const router = useRouter();
 const menuItems = ref([
@@ -38,10 +40,25 @@ const menuItems = ref([
   }
 ]);
 
+const openEditUserModal = async () => {
+  console.log('first');
+  const modal = await modalController.create({
+    component: EditUserModalComponent
+  });
+  return modal.present();
+};
+
 const onClickMenuOption = ( pathName: string ) => {
-  if (pathName === 'logout') {
-    logout();
-    router.push({ name: 'log-in' })
+  switch (pathName) {
+    case 'logout':
+      logout();
+      router.push({ name: 'log-in' })
+      break;
+    case 'myProfile':
+      openEditUserModal();
+      break;  
+    default:
+      break;
   }
 };
 </script>
