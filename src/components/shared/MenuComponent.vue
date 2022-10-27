@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
   IonContent,
   IonMenu,
@@ -7,11 +8,42 @@ import {
   IonTitle,
   IonList,
   IonItem,
-  IonLabel
+  IonLabel,
+  IonIcon
 } from '@ionic/vue';
+import {
+  personCircleOutline,
+  settingsOutline,
+  logOutOutline
+} from 'ionicons/icons';
+import { useRouter } from 'vue-router';
 import { useAuth } from '@/hooks/useAuth';
-const { currentAuthState } = useAuth();
-console.log( currentAuthState.value );
+const { currentAuthState, logout } = useAuth();
+const router = useRouter();
+const menuItems = ref([
+  {
+    title: 'My Profile',
+    pathName: 'myProfile',
+    icon: personCircleOutline
+  },
+  {
+    title: 'Settings',
+    pathName: 'settings',
+    icon: settingsOutline
+  },
+  {
+    title: 'Logout',
+    pathName: 'logout',
+    icon: logOutOutline
+  }
+]);
+
+const onClickMenuOption = ( pathName: string ) => {
+  if (pathName === 'logout') {
+    logout();
+    router.push({ name: 'log-in' })
+  }
+};
 </script>
 <template>
   <ion-menu :disabled="currentAuthState!=='authenticated'" content-id="main-content">
@@ -22,15 +54,12 @@ console.log( currentAuthState.value );
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
-        <ion-item>
-          <ion-label>My Profile</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Settings</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Log Out</ion-label>
-        </ion-item>
+        <div v-for="(item, index) in menuItems" :key="index">
+          <ion-item @click="onClickMenuOption(item.pathName)">
+            <ion-icon :icon="item.icon" class="ion-margin-end"></ion-icon>
+            <ion-label>{{ item.title }}</ion-label>
+          </ion-item>
+        </div>
       </ion-list>
     </ion-content>
   </ion-menu>
