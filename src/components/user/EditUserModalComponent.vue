@@ -18,18 +18,24 @@ import {
 } from '@ionic/vue';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { useAuth } from '@/hooks/useAuth';
+import { useUi } from '@/hooks/useUi';
+import { useUser } from '@/hooks/useUser';
 import User from '@/models/User';
 
 const { loggedUser } = useAuth();
+const { setAlertMessage } = useUi();
 
-const userForm = ref({...loggedUser.value} as User);
+const userForm = ref(loggedUser.value as User);
+const { updateUser } = useUser();
 
 const closeModal = () => {
   modalController.dismiss();
 };
 
-const saveUpdateProfile = () => {
-  console.log('saveUpdateProfile');
+const saveUpdateProfile = async() => {
+  const { ok, message } = await updateUser(userForm.value);
+  setAlertMessage(message);
+  if ( ok ) closeModal();
 };
 
 const takeProfilePhoto = async () => {
@@ -60,7 +66,10 @@ const takeProfilePhoto = async () => {
         <ion-col size="12">
           <div align="center">
             <ion-avatar @click="takeProfilePhoto">
-              <img alt="profile-photo" src="https://spring-book.s3.amazonaws.com/a4e6da10-20b0-4fa0-a554-d8deb9bab57f/80b0bd704135aa62495300727ff77349.jpeg" />
+              <img
+                alt="profile-photo"
+                :src="userForm.profileImageUrl || 'https://ionicframework.com/docs/img/demos/avatar.svg'"
+              />
             </ion-avatar>
           </div>
         </ion-col>
