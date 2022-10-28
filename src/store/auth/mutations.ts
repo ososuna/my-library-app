@@ -16,6 +16,10 @@ export const loginUser = (
   state.status  = 'authenticated';
 }
 
+export const updateProfileImageUrl = ( state: AuthState, profileImageUrl: string ) => {
+  if (state.user) state.user.profileImageUrl = profileImageUrl;
+}
+
 export const logout = ( state: AuthState ) => {
   state.user          = null;
   state.accessToken   = null;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import { IonApp, IonRouterOutlet, IonLoading, toastController } from '@ionic/vue';
+import MenuComponent from '@/components/shared/MenuComponent.vue';
 import { useAuth } from '@/hooks/useAuth';
 import { useUi } from '@/hooks/useUi';
 
@@ -26,7 +27,8 @@ checkAuth();
 </script>
 <template>
   <ion-app>
-    <ion-router-outlet />
+    <MenuComponent />
+    <ion-router-outlet id="main-content" />
       <ion-loading
         v-if="loading.show"
         :isOpen="loading.show"

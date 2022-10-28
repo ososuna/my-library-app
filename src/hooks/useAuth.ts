@@ -1,3 +1,4 @@
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import LoginRequest from '@/models/auth/LoginRequest';
 
@@ -21,7 +22,10 @@ export const useAuth = () => {
   return {
     checkAuth,
     loginUser,
-    logout
+    logout,
+    currentAuthState: computed(()=>store.getters['auth/currentState']),
+    loggedUserId: computed(()=>store.getters['auth/loggedUserId']),
+    loggedUser: computed(()=>store.getters['auth/loggedUser'])
   }
 
 }
