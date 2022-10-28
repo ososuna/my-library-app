@@ -40,10 +40,11 @@ const saveUpdateProfile = async() => {
   const formData = new FormData();
   const userBlob = new Blob([JSON.stringify(userForm.value)], { type: 'application/json' });
   formData.append('user', userBlob);
-  formData.append('file', imageToUpload.value.file as Blob, imageToUpload.value.name);
-  const { ok, message } = await updateUser(loggedUserId.value, formData);
+  if (imageToUpload.value.file) {
+    formData.append('file', imageToUpload.value.file as Blob, imageToUpload.value.name);    
+  }
+  const { message } = await updateUser(loggedUserId.value, formData);
   setAlertMessage(message);
-  if ( ok ) closeModal();
 };
 
 const getAvatarSrc = () => {
@@ -73,7 +74,7 @@ const takeProfilePhoto = async () => {
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button color="medium" @click="closeModal">Cancel</ion-button>
+        <ion-button color="medium" @click="closeModal">Back</ion-button>
       </ion-buttons>
       <ion-title>Edit profile</ion-title>
       <ion-buttons slot="end">
