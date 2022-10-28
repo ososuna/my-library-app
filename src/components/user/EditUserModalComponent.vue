@@ -17,23 +17,31 @@ import {
   modalController
 } from '@ionic/vue';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { b64toBlob } from '@/helpers/b64toBlob';
 import { useAuth } from '@/hooks/useAuth';
 import { useUi } from '@/hooks/useUi';
 import { useUser } from '@/hooks/useUser';
+import ImageFile from '@/models/file/ImageFile';
 import User from '@/models/User';
 
-const { loggedUser } = useAuth();
+const { loggedUser, loggedUserId } = useAuth();
 const { setAlertMessage } = useUi();
+const { updateUser } = useUser();
 
 const userForm = ref(loggedUser.value as User);
-const { updateUser } = useUser();
+
+const imageToUpload = ref({} as ImageFile);
 
 const closeModal = () => {
   modalController.dismiss();
 };
 
 const saveUpdateProfile = async() => {
-  const { ok, message } = await updateUser(userForm.value);
+  const formData = new FormData();
+  const userBlob = new Blob([JSON.stringify(userForm.value)], { type: 'application/json' });
+  formData.append('user', userBlob);
+  formData.append('file', imageToUpload.value.file as Blob, imageToUpload.value.name);
+  const { ok, message } = await updateUser(loggedUserId.value, formData);
   setAlertMessage(message);
   if ( ok ) closeModal();
 };
@@ -44,7 +52,12 @@ const takeProfilePhoto = async () => {
     resultType: CameraResultType.Base64,
     saveToGallery: true
   });
-  console.log(image);
+  if (image.base64String) {
+    imageToUpload.value = {
+      name: `profile-user-${ loggedUserId.value }.jpeg`,
+      file: b64toBlob(image.base64String, 'image/jpeg')
+    };
+  }
 };
 
 </script>

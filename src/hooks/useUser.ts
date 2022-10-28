@@ -1,12 +1,11 @@
 import axios from 'axios';
 import userApi from '@/api/userApi';
-import User from '@/models/User';
 
 export const useUser = () => {
 
-  const updateUser = async( user: User ) => {
+  const updateUser = async( id: number, formData: FormData ) => {
     try {
-      await userApi.put( `/${ user.id }`, user );
+      await userApi.put( `/${ id }`, formData, { headers: {'Content-Type': 'multipart/form-data'} });
       return { ok: true, message: 'Your profile has been updated &#129303' };
     } catch ( error ) {
       if ( axios.isAxiosError( error ) ) {

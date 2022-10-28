@@ -41,7 +41,6 @@ const menuItems = ref([
 ]);
 
 const openEditUserModal = async () => {
-  console.log('first');
   const modal = await modalController.create({
     component: EditUserModalComponent
   });
