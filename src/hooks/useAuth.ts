@@ -23,7 +23,8 @@ export const useAuth = () => {
     checkAuth,
     loginUser,
     logout,
-    currentAuthState: computed(()=>store.getters['auth/currentState'])
+    currentAuthState: computed(()=>store.getters['auth/currentState']),
+    loggedUserId: computed(()=>store.getters['auth/loggedUserId'])
   }
 
 }
