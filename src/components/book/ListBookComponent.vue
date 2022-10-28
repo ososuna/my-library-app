@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineEmits, defineProps, PropType } from 'vue';
-import CardBookComponent from '@/components/CardBookComponent.vue';
-import Book from '@/models/Book';
 import { IonText } from '@ionic/vue';
+import CardBookComponent from '@/components/book/CardBookComponent.vue';
+import Book from '@/models/Book';
 defineProps({
   books: {
     type: Array as PropType<Book[]>,

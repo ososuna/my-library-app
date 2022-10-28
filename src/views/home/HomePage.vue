@@ -14,10 +14,10 @@ import {
   modalController
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
-import FormModalBookComponent from '@/components/FormModalBookComponent.vue';
-import ListBookComponent from '@/components/ListBookComponent.vue';
-import { useBook } from '../../hooks/useBook';
-import { useUi } from '../../hooks/useUi';
+import FormModalBookComponent from '@/components/book/FormModalBookComponent.vue';
+import ListBookComponent from '@/components/book/ListBookComponent.vue';
+import { useBook } from '@/hooks/useBook';
+import { useUi } from '@/hooks/useUi';
 import Book from '@/models/Book';
 
 const APP_NAME = process.env.VUE_APP_NAME;

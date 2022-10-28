@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/vue';
 import { defineProps, PropType } from 'vue';
-import Book from '../models/Book';
+import Book from '@/models/Book';
 defineProps({
   book: {
     type: Object as PropType<Book>,

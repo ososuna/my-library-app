@@ -12,10 +12,10 @@ import {
   IonInput,
   modalController
 } from '@ionic/vue';
-import Book from '../models/Book';
-import { useBook } from '../hooks/useBook';
-import { useUi } from '../hooks/useUi';
-import { useAuth } from '../hooks/useAuth';
+import Book from '@/models/Book';
+import { useBook } from '@/hooks/useBook';
+import { useUi } from '@/hooks/useUi';
+import { useAuth } from '@/hooks/useAuth';
 
 const { createBook, updateBook } = useBook();
 const { setAlertMessage } = useUi();
