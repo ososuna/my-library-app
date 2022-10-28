@@ -46,6 +46,14 @@ const saveUpdateProfile = async() => {
   if ( ok ) closeModal();
 };
 
+const getAvatarSrc = () => {
+  if (imageToUpload.value.file) {
+    return URL.createObjectURL(imageToUpload.value.file);
+  } else {
+    return userForm.value.profileImageUrl || 'https://ionicframework.com/docs/img/demos/avatar.svg';
+  }
+};
+
 const takeProfilePhoto = async () => {
   const image = await Camera.getPhoto({
     quality: 90,
@@ -81,7 +89,7 @@ const takeProfilePhoto = async () => {
             <ion-avatar @click="takeProfilePhoto">
               <img
                 alt="profile-photo"
-                :src="userForm.profileImageUrl || 'https://ionicframework.com/docs/img/demos/avatar.svg'"
+                :src="getAvatarSrc()"
               />
             </ion-avatar>
           </div>
