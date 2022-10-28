@@ -24,7 +24,8 @@ export const useAuth = () => {
     loginUser,
     logout,
     currentAuthState: computed(()=>store.getters['auth/currentState']),
-    loggedUserId: computed(()=>store.getters['auth/loggedUserId'])
+    loggedUserId: computed(()=>store.getters['auth/loggedUserId']),
+    loggedUser: computed(()=>store.getters['auth/loggedUser'])
   }
 
 }

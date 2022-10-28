@@ -7,3 +7,6 @@ export const currentState = ( state: AuthState ) => {
 export const loggedUserId = ( state: AuthState ) => {
   return state.user?.id;
 }
+export const loggedUser = ( state: AuthState ) => {
+  return state.user;
+}

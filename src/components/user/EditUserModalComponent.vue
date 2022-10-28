@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
   IonButton,
   IonButtons,
@@ -16,6 +17,12 @@ import {
   modalController
 } from '@ionic/vue';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { useAuth } from '@/hooks/useAuth';
+import User from '@/models/User';
+
+const { loggedUser } = useAuth();
+
+const userForm = ref({...loggedUser.value} as User);
 
 const closeModal = () => {
   modalController.dismiss();
@@ -53,7 +60,7 @@ const takeProfilePhoto = async () => {
         <ion-col size="12">
           <div align="center">
             <ion-avatar @click="takeProfilePhoto">
-              <img alt="Silhouette of a person's head" src="https://spring-book.s3.amazonaws.com/a4e6da10-20b0-4fa0-a554-d8deb9bab57f/80b0bd704135aa62495300727ff77349.jpeg" />
+              <img alt="profile-photo" src="https://spring-book.s3.amazonaws.com/a4e6da10-20b0-4fa0-a554-d8deb9bab57f/80b0bd704135aa62495300727ff77349.jpeg" />
             </ion-avatar>
           </div>
         </ion-col>
@@ -62,13 +69,13 @@ const takeProfilePhoto = async () => {
         <ion-col>
           <ion-item>
             <ion-label position="stacked">First name</ion-label>
-            <ion-input placeholder="First name"></ion-input>
+            <ion-input v-model="userForm.firstName" placeholder="First name"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Last name</ion-label>
-            <ion-input placeholder="Last name"></ion-input>
+            <ion-input v-model="userForm.lastName" placeholder="Last name"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -76,7 +83,7 @@ const takeProfilePhoto = async () => {
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Email</ion-label>
-            <ion-input type="email" placeholder="Email"></ion-input>
+            <ion-input v-model="userForm.email" type="email" placeholder="Email"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -84,7 +91,7 @@ const takeProfilePhoto = async () => {
         <ion-col size="6">
           <ion-item>
             <ion-label position="stacked">Age</ion-label>
-            <ion-input type="number" placeholder="Age"></ion-input>
+            <ion-input v-model="userForm.age" type="number" placeholder="Age"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
