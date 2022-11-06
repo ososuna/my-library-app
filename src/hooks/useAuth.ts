@@ -1,6 +1,7 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import LoginRequest from '@/models/auth/LoginRequest';
+import SignUpRequest from '@/models/auth/SignUpRequest';
 
 export const useAuth = () => {
 
@@ -9,6 +10,10 @@ export const useAuth = () => {
   const checkAuth = async() => {
     const resp = await store.dispatch( 'auth/checkAuth' );
     return resp;
+  }
+
+  const createUser = async( signUpRequest: SignUpRequest ) => {
+    return await store.dispatch('auth/createUser', signUpRequest);
   }
 
   const loginUser = async( user: LoginRequest ) => {
@@ -21,6 +26,7 @@ export const useAuth = () => {
 
   return {
     checkAuth,
+    createUser,
     loginUser,
     logout,
     currentAuthState: computed(()=>store.getters['auth/currentState']),

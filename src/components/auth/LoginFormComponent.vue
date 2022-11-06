@@ -26,11 +26,11 @@ const loginRequest = ref({
 
 const onSubmit = async() => {
   const { ok, message } = await loginUser( loginRequest.value );
-  if( ok ) {
-    router.push({ name: 'home' });
-  } else {
+  if( !ok ) {
     setAlertMessage( message );
+    return;
   }
+  router.push({ name: 'home' });
 };
 
 </script>

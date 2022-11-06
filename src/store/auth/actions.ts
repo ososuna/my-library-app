@@ -1,35 +1,50 @@
 import { Commit } from 'vuex';
 import axios from 'axios';
+import qs from 'qs';
 import authApi from '@/api/authApi';
 import LoginRequest from '../../models/auth/LoginRequest';
-import qs from 'qs';
+import SignUpRequest from '@/models/auth/SignUpRequest';
 
-export const loginUser = async( { commit }: { commit: Commit }, user: LoginRequest ) => {
+const ERROR_MSG = 'An error occurred. Please try again later.';
+
+export const loginUser = async( { commit }: { commit: Commit }, loginRequest: LoginRequest ) => {
   try {
-    const { data } = await authApi.post( '/login', qs.stringify(user) );
+    const { data } = await authApi.post( '/login', qs.stringify(loginRequest) );
     const { user: userData, access_token: accessToken, refresh_token: refreshToken } = data;
     commit( 'loginUser', { user: userData, accessToken, refreshToken } );
-    return { ok: true, message: 'login successful' };
+    return { ok: true, message: 'Login successful' };
   } catch ( error ) {
     if ( axios.isAxiosError( error ) ) {
-      const { message } = error.response?.data as any || 'Ha ocurrido un error';
+      const { message } = error.response?.data as any || ERROR_MSG;
       return { ok: false, message: message+' &#128531;'  };
     } else {
-      return { ok: false, message: 'Ha ocurrido un error' };
+      return { ok: false, message: ERROR_MSG };
     }
   }
 }
 
-export const checkAuth = async ({ commit }: { commit: Commit }) => {
-  
-  const accessToken   = localStorage.getItem('access_token');
-  const refreshToken  = localStorage.getItem('refresh_token');
+export const createUser = async({ commit }: { commit: Commit }, signUpRequest: SignUpRequest ) => {
+  try {
+    const { data, status } = await authApi.post( '/register', signUpRequest );
+    if (status !== 200) return { ok: false, message: data.message };
+    return await loginUser( { commit }, { email: signUpRequest.email, password: signUpRequest.password } );
+  } catch ( error ) {
+    if ( axios.isAxiosError( error ) ) {
+      const { message } = error.response?.data as any || ERROR_MSG;
+      return { ok: false, message };
+    } else {
+      return { ok: false, msg: ERROR_MSG };
+    } 
+  }
+}
 
+export const checkAuth = async ({ commit }: { commit: Commit }) => {
+  const accessToken = localStorage.getItem('access_token');
+  const refreshToken = localStorage.getItem('refresh_token');
   if ( !accessToken || !refreshToken ) {
     commit('logout');
-    return { ok: false, message: 'No existe un token' };
+    return { ok: false, message: 'Unexisting token' };
   }
-
   try {
     const { data } = await authApi.get( '/token/refresh', {
       headers: {
@@ -42,10 +57,10 @@ export const checkAuth = async ({ commit }: { commit: Commit }) => {
   } catch ( error ) {
     commit('logout');
     if ( axios.isAxiosError( error ) ) {
-      const { message } = error.response?.data as any || 'Ha ocurrido un error';
+      const { message } = error.response?.data as any || ERROR_MSG;
       return { ok: false, message };
     } else {
-      return { ok: false, message: 'Ha ocurrido un error' };
+      return { ok: false, message: ERROR_MSG };
     }
   }  
 }

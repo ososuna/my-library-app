@@ -10,20 +10,24 @@ import {
   IonButton,
   IonNote
 } from '@ionic/vue';
+import { useRouter } from 'vue-router';
 import { validateEmail } from '@/helpers/validateEmail';
+import { useAuth } from '@/hooks/useAuth';
 import { useUi } from '@/hooks/useUi';
 import Role from '@/models/auth/Role';
 import SignUpForm from '@/models/ui/SignUpForm';
 
+const { createUser } = useAuth();
 const { setAlertMessage } = useUi();
+const router = useRouter();
 
-const signUpRequest = ref({
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  passwordConfirm: '',
-  age: '',
+const signUpForm = ref({
+  firstName: 'Jian',
+  lastName: 'Yang',
+  email: 'admin@test.com',
+  password: '123456',
+  passwordConfirm: '123456',
+  age: 12,
   role: Role.User
 } as SignUpForm);
 
@@ -43,8 +47,8 @@ const errorMessage = ref('');
 const validateEmailInput = () => {
   emailValidation.value.isValid = false;
   emailValidation.value.isInvalid = false;
-  if (signUpRequest.value.email === '') return;
-  if (validateEmail(signUpRequest.value.email)) {
+  if (signUpForm.value.email === '') return;
+  if (validateEmail(signUpForm.value.email)) {
     emailValidation.value.isValid = true;
     emailValidation.value.isInvalid = false;
     errorMessage.value = '';
@@ -58,13 +62,13 @@ const validateEmailInput = () => {
 const validatePasswordInput = () => {
   passwordValidation.value.isValid = false;
   passwordValidation.value.isInvalid = false;
-  if (signUpRequest.value.password === '') return;
-  if (signUpRequest.value.password.length < 6) {
+  if (signUpForm.value.password === '') return;
+  if (signUpForm.value.password.length < 6) {
     passwordValidation.value.isValid = false;
     passwordValidation.value.isInvalid = true;
     passwordValidation.value.message = 'Password must be at least 6 characters long';
     errorMessage.value = passwordValidation.value.message;
-  } else if ((signUpRequest.value.password !== signUpRequest.value.passwordConfirm) && signUpRequest.value.passwordConfirm !== '') {
+  } else if ((signUpForm.value.password !== signUpForm.value.passwordConfirm) && signUpForm.value.passwordConfirm !== '') {
     passwordValidation.value.isValid = false;
     passwordValidation.value.isInvalid = true;
     passwordValidation.value.message = 'Passwords do not match';
@@ -76,16 +80,23 @@ const validatePasswordInput = () => {
   }
 }
 
-const onSubmit = () => {
+const onSubmit = async() => {
   if (errorMessage.value !== '') {
     setAlertMessage(errorMessage.value);
     return;
   }
+  const { passwordConfirm, ...signUpRequest } = signUpForm.value;
+  const { ok, message } = await createUser(signUpRequest);
+  if (!ok) {
+    setAlertMessage(message);
+    return;
+  }
+  router.push({ name: 'home' });
 }
 
-watch(signUpRequest.value, () => {
-  if (signUpRequest.value.email !== '') validateEmailInput();
-  if (signUpRequest.value.password !== '') validatePasswordInput();
+watch(signUpForm.value, () => {
+  if (signUpForm.value.email !== '') validateEmailInput();
+  if (signUpForm.value.password !== '') validatePasswordInput();
 });
 
 </script>
@@ -98,7 +109,7 @@ watch(signUpRequest.value, () => {
             <ion-label position="floating">Email</ion-label>
             <ion-input
               required
-              v-model="signUpRequest.email"
+              v-model="signUpForm.email"
               placeholder="Enter your email"
               type="email"
             >
@@ -112,14 +123,14 @@ watch(signUpRequest.value, () => {
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating">First name</ion-label>
-            <ion-input required v-model="signUpRequest.firstName" placeholder="Enter your first name"></ion-input>
+            <ion-input required v-model="signUpForm.firstName" placeholder="Enter your first name"></ion-input>
             <ion-note slot="error">Enter your first name</ion-note>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating">Last name</ion-label>
-            <ion-input required v-model="signUpRequest.lastName" placeholder="Enter your last name"></ion-input>
+            <ion-input required v-model="signUpForm.lastName" placeholder="Enter your last name"></ion-input>
             <ion-note slot="error">Enter your last name</ion-note>
           </ion-item>
         </ion-col>
@@ -128,7 +139,7 @@ watch(signUpRequest.value, () => {
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating">Age</ion-label>
-            <ion-input required v-model="signUpRequest.age" placeholder="Enter your age" type="number"></ion-input>
+            <ion-input required v-model="signUpForm.age" placeholder="Enter your age" type="number"></ion-input>
             <ion-note slot="error">Enter a valid age</ion-note>
           </ion-item>
         </ion-col>
@@ -137,7 +148,7 @@ watch(signUpRequest.value, () => {
         <ion-col size="12">
           <ion-item :class="{ 'ion-valid': passwordValidation.isValid, 'ion-invalid': passwordValidation.isInvalid }">
             <ion-label position="floating">Password</ion-label>
-            <ion-input required v-model="signUpRequest.password" placeholder="Enter your password" type="password"></ion-input>
+            <ion-input required v-model="signUpForm.password" placeholder="Enter your password" type="password"></ion-input>
             <ion-note slot="helper">Enter your password</ion-note>
             <ion-note slot="error">{{ passwordValidation.message }}</ion-note>
           </ion-item>
@@ -147,9 +158,9 @@ watch(signUpRequest.value, () => {
         <ion-col size="12">
           <ion-item :class="{ 'ion-valid': passwordValidation.isValid, 'ion-invalid': passwordValidation.isInvalid }">
             <ion-label position="floating">Confirm password</ion-label>
-            <ion-input required v-model="signUpRequest.passwordConfirm" placeholder="Confirm your password" type="password"></ion-input>
+            <ion-input required v-model="signUpForm.passwordConfirm" placeholder="Confirm your password" type="password"></ion-input>
             <ion-note slot="helper">Confirm your password</ion-note>
-            <ion-note v-if="signUpRequest.passwordConfirm!==''" slot="error">{{ passwordValidation.message }}</ion-note>
+            <ion-note v-if="signUpForm.passwordConfirm!==''" slot="error">{{ passwordValidation.message }}</ion-note>
           </ion-item>
         </ion-col>
       </ion-row>
