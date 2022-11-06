@@ -24,7 +24,7 @@ const loginRequest = ref({
   password: ''
 } as LoginRequest);
 
-const onLogIn = async() => {
+const onSubmit = async() => {
   const { ok, message } = await loginUser( loginRequest.value );
   if( ok ) {
     router.push({ name: 'home' });
@@ -36,28 +36,30 @@ const onLogIn = async() => {
 </script>
 <template>
   <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input v-model="loginRequest.email" placeholder="Enter your email"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input v-model="loginRequest.password" placeholder="Enter your password" type="password"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-margin-top">
-      <ion-col size="12" class="center">
-        <ion-button @click="onLogIn" expand="block">
-          Login
-        </ion-button>
-      </ion-col>
-    </ion-row>
+    <form @submit.prevent="onSubmit">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" required v-model="loginRequest.email" placeholder="Enter your email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input required v-model="loginRequest.password" placeholder="Enter your password" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top">
+        <ion-col size="12" class="center">
+          <ion-button type="submit" expand="block">
+            Log In
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
   </ion-grid>
 </template>
