@@ -22,12 +22,12 @@ const { setAlertMessage } = useUi();
 const router = useRouter();
 
 const signUpForm = ref({
-  firstName: 'Jian',
-  lastName: 'Yang',
-  email: 'admin@test.com',
-  password: '123456',
-  passwordConfirm: '123456',
-  age: 12,
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  passwordConfirm: '',
+  age: '',
   role: Role.User
 } as SignUpForm);
 
@@ -85,6 +85,7 @@ const onSubmit = async() => {
     setAlertMessage(errorMessage.value);
     return;
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { passwordConfirm, ...signUpRequest } = signUpForm.value;
   const { ok, message } = await createUser(signUpRequest);
   if (!ok) {
