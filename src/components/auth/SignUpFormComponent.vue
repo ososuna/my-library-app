@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import {
   IonGrid,
   IonRow,
@@ -12,30 +12,65 @@ import {
 } from '@ionic/vue';
 import { validateEmail } from '@/helpers/validateEmail';
 import Role from '@/models/auth/Role';
-import SignUpRequest from '@/models/auth/SignUpRequest';
+import SignUpForm from '@/models/ui/SignUpForm';
 
 const signUpRequest = ref({
   firstName: '',
   lastName: '',
   email: '',
   password: '',
+  passwordConfirm: '',
   age: '',
   role: Role.User
-} as SignUpRequest);
+} as SignUpForm);
 
 const emailValidation = ref({
   isValid:   false,
   isInvalid: false
 });
 
+const passwordValidation = ref({
+  isValid:   false,
+  isInvalid: false,
+  message:   ''
+});
+
 const validateEmailInput = () => {
   emailValidation.value.isValid = false;
   emailValidation.value.isInvalid = false;
   if (signUpRequest.value.email === '') return;
-  validateEmail(signUpRequest.value.email)
-    ? emailValidation.value.isValid = true
-    : emailValidation.value.isInvalid = true;
+  if (validateEmail(signUpRequest.value.email)) {
+    emailValidation.value.isValid = true;
+    emailValidation.value.isInvalid = false;
+  } else {
+    emailValidation.value.isValid = false;
+    emailValidation.value.isInvalid = true;
+  }
 }
+
+const validatePasswordInput = () => {
+  passwordValidation.value.isValid = false;
+  passwordValidation.value.isInvalid = false;
+  if (signUpRequest.value.password === '') return;
+  if (signUpRequest.value.password.length < 6) {
+    passwordValidation.value.isValid = false;
+    passwordValidation.value.isInvalid = true;
+    passwordValidation.value.message = 'Password must be at least 6 characters long';
+  } else if ((signUpRequest.value.password !== signUpRequest.value.passwordConfirm) && signUpRequest.value.passwordConfirm !== '') {
+    passwordValidation.value.isValid = false;
+    passwordValidation.value.isInvalid = true;
+    passwordValidation.value.message = 'Passwords do not match';
+  } else {
+    passwordValidation.value.isValid = true;
+    passwordValidation.value.isInvalid = false;
+  }
+}
+
+
+watch(signUpRequest.value, () => {
+  if (signUpRequest.value.email !== '') validateEmailInput();
+  if (signUpRequest.value.password !== '') validatePasswordInput();
+});
 
 </script>
 <template>
@@ -46,7 +81,6 @@ const validateEmailInput = () => {
           <ion-label position="floating">Email</ion-label>
           <ion-input
             v-model="signUpRequest.email"
-            @ionInput="validateEmailInput"
             placeholder="Enter your email"
             type="email"
           >
@@ -80,17 +114,21 @@ const validateEmailInput = () => {
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-item>
+        <ion-item :class="{ 'ion-valid': passwordValidation.isValid, 'ion-invalid': passwordValidation.isInvalid }">
           <ion-label position="floating">Password</ion-label>
-          <ion-input placeholder="Enter your password" type="password"></ion-input>
+          <ion-input v-model="signUpRequest.password" placeholder="Enter your password" type="password"></ion-input>
+          <ion-note slot="helper">Enter your password</ion-note>
+          <ion-note slot="error">{{ passwordValidation.message }}</ion-note>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-item>
+        <ion-item :class="{ 'ion-valid': passwordValidation.isValid, 'ion-invalid': passwordValidation.isInvalid }">
           <ion-label position="floating">Confirm password</ion-label>
-          <ion-input placeholder="Confirm your password" type="password"></ion-input>
+          <ion-input v-model="signUpRequest.passwordConfirm" placeholder="Confirm your password" type="password"></ion-input>
+          <ion-note slot="helper">Confirm your password</ion-note>
+          <ion-note v-if="signUpRequest.passwordConfirm!==''" slot="error">{{ passwordValidation.message }}</ion-note>
         </ion-item>
       </ion-col>
     </ion-row>
