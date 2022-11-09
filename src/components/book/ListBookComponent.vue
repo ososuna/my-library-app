@@ -9,7 +9,7 @@ defineProps({
     required: true
   }
 });
-const emit = defineEmits(['onClick']);
+const emit = defineEmits(['onClick', 'onDelete', 'onUpdate']);
 </script>
 <template>
   <div v-if="books.length===0" class="ion-text-center">
@@ -20,7 +20,9 @@ const emit = defineEmits(['onClick']);
   <CardBookComponent
     v-else
     v-for="(book, index) in books"
-    @click="emit('onClick', book)"
+    @onClick="emit('onClick', book)"
+    @onDelete="emit('onDelete', book.id)"
+    @onUpdate="emit('onUpdate', book)"
     :key="index"
     :book="book"
   />

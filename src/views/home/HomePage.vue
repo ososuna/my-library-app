@@ -62,6 +62,14 @@ const openUpdateModal = async ( book: Book ) => {
   return modal.present();
 };
 
+const deleteBook = async (id: string) => {
+  console.log('deleteBook:', id);
+};
+
+const onClick = (book: Book) => {
+  console.log('onClick:', book);
+};
+
 init();
 
 </script>
@@ -83,7 +91,9 @@ init();
       </ion-header>
       <ListBookComponent
         :books="books"
-        @onClick="openUpdateModal"
+        @onClick="onClick"
+        @onDelete="deleteBook"
+        @onUpdate="openUpdateModal"
       />
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button @click="openCreateModal">
