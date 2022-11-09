@@ -4,7 +4,7 @@ Mobile App for Spring Book
 ## What is this?
 Spring Book is a hybrid mobile application (iOS and Android) that allows the user to keep a record of their read books and access the functions available to apply a series of techniques that facilitate the understanding, memorization, and application of concepts learned at reading.
 
-<br><br>
+<br>
 <img width="300" src="https://media.giphy.com/media/ZkwSxuckDvf7q/giphy.gif"/>
 
 ## Rest API
