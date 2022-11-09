@@ -13,13 +13,13 @@ import {
   modalController
 } from '@ionic/vue';
 import Book from '@/models/Book';
+import { useAuth } from '@/hooks/useAuth';
 import { useBook } from '@/hooks/useBook';
 import { useUi } from '@/hooks/useUi';
-import { useAuth } from '@/hooks/useAuth';
 
+const { loggedUserId } = useAuth();
 const { createBook, updateBook } = useBook();
 const { setAlertMessage } = useUi();
-const { loggedUserId } = useAuth();
 
 const props = defineProps({
   book: {

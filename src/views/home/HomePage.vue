@@ -22,8 +22,8 @@ import Book from '@/models/Book';
 
 const APP_NAME = process.env.VUE_APP_NAME;
 
-const { getBooks } = useBook();
-const { setLoading } = useUi();
+const { deleteBook, getBooks } = useBook();
+const { openConfirmModal, setLoading } = useUi();
 
 const books = ref<Book[]>([]);
 
@@ -62,8 +62,13 @@ const openUpdateModal = async ( book: Book ) => {
   return modal.present();
 };
 
-const deleteBook = async (id: string) => {
-  console.log('deleteBook:', id);
+const saveDeleteBook = async(id: number) => {
+  const decision = await openConfirmModal('Are you sure you want to delete this book?');
+  if (!decision) return;
+  setLoading(true, 'Deleting book...');
+  const { ok } = await deleteBook(id);
+  if (ok) await loadBooks();
+  setLoading(false, '');
 };
 
 const onClick = (book: Book) => {
@@ -92,7 +97,7 @@ init();
       <ListBookComponent
         :books="books"
         @onClick="onClick"
-        @onDelete="deleteBook"
+        @onDelete="saveDeleteBook"
         @onUpdate="openUpdateModal"
       />
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
