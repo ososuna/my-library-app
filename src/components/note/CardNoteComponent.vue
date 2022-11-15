@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { 
+  IonCard,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCardContent
+} from '@ionic/vue';
 </script>
 <template>
 <ion-card>

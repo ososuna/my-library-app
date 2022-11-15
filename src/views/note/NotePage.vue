@@ -9,10 +9,13 @@ import {
   IonTitle,
   IonContent,
   IonIcon,
+  IonFab,
+  IonFabButton
 } from '@ionic/vue';
-import { arrowBack } from 'ionicons/icons';
+import { add, arrowBack } from 'ionicons/icons';
 import { useBook } from '@/hooks/useBook';
 import Book from '@/models/Book';
+import ListNoteComponent from '@/components/note/ListNoteComponent.vue';
 
 const { getBookById } = useBook();
 const route = useRoute();
@@ -44,6 +47,12 @@ getBook();
           <ion-title size="large">{{ book.name }}</ion-title>
         </ion-toolbar>
       </ion-header>
+      <ListNoteComponent />
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+          <ion-icon :icon="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-content>
   </ion-page>
 </template>
