@@ -14,21 +14,39 @@ import {
 } from '@ionic/vue';
 import { add, arrowBack } from 'ionicons/icons';
 import { useBook } from '@/hooks/useBook';
+import { useNote } from '@/hooks/useNote';
 import Book from '@/models/Book';
+import Note from '@/models/Note';
 import ListNoteComponent from '@/components/note/ListNoteComponent.vue';
+import { useUi } from '@/hooks/useUi';
 
 const { getBookById } = useBook();
+const { getNotesByBookId } = useNote();
 const route = useRoute();
 const router = useRouter();
+const { loading, setLoading } = useUi();
 
 const book = ref({} as Book);
+const notes = ref([] as Note[]);
+
+const init = async() => {
+  setLoading(true, 'Loading notes...');
+  await getBook();
+  await loadNotes();
+  setLoading(false, '');
+};
 
 const getBook = async () => {
   const { data } = await getBookById(Number(route.params['bookId']));
   book.value = data;
 };
 
-getBook();
+const loadNotes = async() => {
+  const { data } = await getNotesByBookId(Number(route.params['bookId']));
+  notes.value = data;
+};
+
+init();
 
 </script>
 <template>
@@ -47,7 +65,10 @@ getBook();
           <ion-title size="large">{{ book.name }}</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ListNoteComponent />
+      <ListNoteComponent
+        v-if="notes.length > 0 && !loading.show"
+        :notes="notes"
+      />
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
           <ion-icon :icon="add"></ion-icon>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defineProps, PropType } from 'vue';
 import { 
   IonCard,
   IonCardHeader,
@@ -6,17 +7,24 @@ import {
   IonCardTitle,
   IonCardContent
 } from '@ionic/vue';
+import Note from '@/models/Note';
+defineProps ({
+  note: {
+    type: Object as PropType<Note>,
+    required: true
+  }
+});
 </script>
 <template>
 <ion-card>
   <ion-card-header>
     <ion-card-subtitle>
-      Tue 8 Nov 2022
+      {{ note.date }}
     </ion-card-subtitle>
-    <ion-card-title>Title</ion-card-title>
+    <ion-card-title>{{ note.name }}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod, totam minima! Aut iste et dolor dicta, unde mollitia, perferendis quasi corporis beatae aliquid laudantium tempore sint a minus eaque. Consectetur.</p>
+    <p>{{ note.description }}</p>
   </ion-card-content>
 </ion-card>
 </template>
