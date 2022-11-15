@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import {
   IonContent,
   IonHeader,
@@ -26,6 +27,7 @@ const APP_NAME = process.env.VUE_APP_NAME;
 const { loggedUserId } = useAuth();
 const { deleteBook, getBooksByUser } = useBook();
 const { openConfirmModal, setLoading } = useUi();
+const router = useRouter();
 const booksLoaded = ref(false);
 
 const books = ref<Book[]>([]);
@@ -76,7 +78,7 @@ const saveDeleteBook = async(id: number) => {
 };
 
 const onClick = (book: Book) => {
-  console.log('onClick:', book);
+  router.push({ name: 'note', params: { bookId: book.id } });
 };
 
 onMounted(async() => {

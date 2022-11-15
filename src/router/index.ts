@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import isAuthGuard from '@/router/auth/authGuard';
 import authRouter from '@/router/auth';
 import homeRouter from '@/router/home';
+import noteRouter from '@/router/note';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -13,6 +14,10 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/auth',
 		...authRouter
+	},
+	{
+		path: '/notes/bookId/:bookId',
+		...noteRouter
 	}
 ];
 
