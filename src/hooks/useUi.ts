@@ -38,6 +38,6 @@ export const useUi = () => {
     setAlertMessage,
     setLoading,
     alert: computed(() => store.getters['ui/getAlert']),
-    loading: computed(() => store.getters['ui/getLoading']),
+    loading: computed(() => store.getters['ui/getLoading'])
   }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import {
   IonContent,
   IonHeader,
@@ -16,30 +16,34 @@ import {
 import { add } from 'ionicons/icons';
 import FormModalBookComponent from '@/components/book/FormModalBookComponent.vue';
 import ListBookComponent from '@/components/book/ListBookComponent.vue';
+import { useAuth } from '@/hooks/useAuth';
 import { useBook } from '@/hooks/useBook';
 import { useUi } from '@/hooks/useUi';
 import Book from '@/models/Book';
 
 const APP_NAME = process.env.VUE_APP_NAME;
 
-const { deleteBook, getBooks } = useBook();
+const { loggedUserId } = useAuth();
+const { deleteBook, getBooksByUser } = useBook();
 const { openConfirmModal, setLoading } = useUi();
+const booksLoaded = ref(false);
 
 const books = ref<Book[]>([]);
 
-const init = async () => {
+const init = async() => {
   setLoading(true, 'Loading books...');
   await loadBooks();
   setLoading(false, '');
 };
 
 const loadBooks = async () => {
-  const { ok, data } = await getBooks();
+  const { ok, data } = await getBooksByUser( loggedUserId.value );
   if ( ok ) books.value = data;
+  booksLoaded.value = true;
 };
 
-const onSave = () => {
-  loadBooks();
+const onSave = async() => {
+  await loadBooks();
 };
 
 const openCreateModal = async () => {
@@ -75,7 +79,9 @@ const onClick = (book: Book) => {
   console.log('onClick:', book);
 };
 
-init();
+onMounted(async() => {
+  await init();
+});
 
 </script>
 <template>
