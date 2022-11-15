@@ -1,12 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import {
+  IonToolbar,
+  IonPage,
+  IonHeader,
+  IonButtons,
+  IonTitle,
+  IonContent,
+  IonIcon,
+} from '@ionic/vue';
+import { arrowBack } from 'ionicons/icons';
 import { useBook } from '@/hooks/useBook';
 import Book from '@/models/Book';
 
 const { getBookById } = useBook();
-
 const route = useRoute();
+const router = useRouter();
 
 const book = ref({} as Book);
 
@@ -23,7 +33,7 @@ getBook();
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
+          <ion-icon @click="router.go(-1)" slot="icon-only" :icon="arrowBack"></ion-icon>
         </ion-buttons>
         <ion-title>{{ book.name }}</ion-title>
       </ion-toolbar>
