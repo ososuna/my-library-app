@@ -1,23 +1,33 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { RouteRecordRaw } from 'vue-router';
-import isAuthGuard from '@/router/auth/authGuard';
 import authRouter from '@/router/auth';
-import homeRouter from '@/router/home';
-import noteRouter from '@/router/note';
+import isAuthGuard from '@/router/auth/authGuard';
+import { createRouter, createWebHistory } from '@ionic/vue-router';
+import { RouteComponent, RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '',
 		beforeEnter: [ isAuthGuard ],
-		...homeRouter
+		name: 'home',
+		component: (): Promise<RouteComponent> => import('@/views/home/HomePage.vue')
 	},
 	{
 		path: '/auth',
 		...authRouter
 	},
 	{
-		path: '/notes/bookId/:bookId',
-		...noteRouter
+		path: '/note/bookId/:bookId',
+		name: 'note',
+		component: (): Promise<RouteComponent> => import('@/views/note/NotePage.vue')
+	},
+	{
+		path: '/note/new',
+		name: 'newNote',
+		component: (): Promise<RouteComponent> => import('@/views/note/NewNotePage.vue')
+	},
+	{
+		path: '/note/edit/:id',
+		name: 'editNote',
+		component: (): Promise<RouteComponent> => import('@/views/note/EditNotePage.vue')
 	}
 ];
 

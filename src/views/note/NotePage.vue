@@ -13,12 +13,12 @@ import {
   IonFabButton
 } from '@ionic/vue';
 import { add, arrowBack } from 'ionicons/icons';
+import ListNoteComponent from '@/components/note/ListNoteComponent.vue';
 import { useBook } from '@/hooks/useBook';
 import { useNote } from '@/hooks/useNote';
+import { useUi } from '@/hooks/useUi';
 import Book from '@/models/Book';
 import Note from '@/models/Note';
-import ListNoteComponent from '@/components/note/ListNoteComponent.vue';
-import { useUi } from '@/hooks/useUi';
 
 const { getBookById } = useBook();
 const { getNotesByBookId } = useNote();
@@ -70,7 +70,7 @@ init();
         :notes="notes"
       />
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button>
+        <ion-fab-button @click="router.push({ name: 'newNote' })">
           <ion-icon :icon="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
