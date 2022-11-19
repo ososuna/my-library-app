@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, onUpdated } from 'vue';
 import {
   IonButtons,
   IonContent,
@@ -15,9 +16,9 @@ import {
 } from '@ionic/vue';
 import { arrowBack, save } from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router';
-import { ref, onUpdated } from 'vue';
 import { useNote } from '@/hooks/useNote';
 import { useUi } from '@/hooks/useUi';
+import NewNoteDto from '@/models/dto/NewNoteDto';
 
 const route = useRoute();
 const router = useRouter();
@@ -28,7 +29,7 @@ const newNoteForm = ref({
   name: '',
   description: '',
   bookId: Number(route.params['bookId'])
-});
+} as NewNoteDto);
 
 const saveNote = async() => {
   const { ok, message } = await createNote(newNoteForm.value);

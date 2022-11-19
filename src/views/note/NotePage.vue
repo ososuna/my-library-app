@@ -44,6 +44,10 @@ const loadNotes = async() => {
   notes.value = data;
 };
 
+const onClick = (note: Note) => {
+  router.push({ name: 'editNote', params: { id: note.id } });
+};
+
 init();
 
 onUpdated(() => {
@@ -73,6 +77,7 @@ onUpdated(() => {
       <ListNoteComponent
         v-if="notes?.length > 0 && !loading.show"
         :notes="notes"
+        @onClick="onClick"
       />
     </ion-content>
   </ion-page>
