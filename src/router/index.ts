@@ -7,8 +7,8 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '',
 		beforeEnter: [ isAuthGuard ],
-		name: 'home',
-		component: (): Promise<RouteComponent> => import('@/views/home/HomePage.vue')
+		name: 'book',
+		component: (): Promise<RouteComponent> => import('@/views/book/BookPage.vue')
 	},
 	{
 		path: '/auth',

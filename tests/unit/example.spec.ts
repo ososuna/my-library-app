@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
-import HomePage from '@/views/HomePage.vue'
+import BookPage from '@/views/BookPage.vue'
 
-describe('HomePage.vue', () => {
-  it('renders home vue', () => {
-    const wrapper = mount(HomePage)
+describe('BookPage.vue', () => {
+  it('renders book vue', () => {
+    const wrapper = mount(BookPage)
     expect(wrapper.text()).toMatch('Ready to create an app?')
   })
 })
