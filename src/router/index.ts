@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
 		component: (): Promise<RouteComponent> => import('@/views/note/NotePage.vue')
 	},
 	{
-		path: '/note/new',
+		path: '/note/new/bookId/:bookId',
 		name: 'newNote',
 		component: (): Promise<RouteComponent> => import('@/views/note/NewNotePage.vue')
 	},

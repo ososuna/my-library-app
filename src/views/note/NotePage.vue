@@ -55,7 +55,7 @@ init();
           <ion-icon @click="router.go(-1)" slot="icon-only" :icon="arrowBack"></ion-icon>
         </ion-buttons>
         <ion-buttons slot="end">
-          <ion-icon @click="router.push({ name: 'newNote' })" slot="icon-only" :icon="add"></ion-icon>
+          <ion-icon @click="router.push({ name: 'newNote', params: {bookId: route.params['bookId']} })" slot="icon-only" :icon="add"></ion-icon>
         </ion-buttons>
         <ion-title>{{ book.name }}</ion-title>
       </ion-toolbar>
