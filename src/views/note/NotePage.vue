@@ -8,9 +8,7 @@ import {
   IonButtons,
   IonTitle,
   IonContent,
-  IonIcon,
-  IonFab,
-  IonFabButton
+  IonIcon
 } from '@ionic/vue';
 import { add, arrowBack } from 'ionicons/icons';
 import ListNoteComponent from '@/components/note/ListNoteComponent.vue';
@@ -56,6 +54,9 @@ init();
         <ion-buttons slot="start">
           <ion-icon @click="router.go(-1)" slot="icon-only" :icon="arrowBack"></ion-icon>
         </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-icon @click="router.push({ name: 'newNote' })" slot="icon-only" :icon="add"></ion-icon>
+        </ion-buttons>
         <ion-title>{{ book.name }}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -69,11 +70,6 @@ init();
         v-if="notes.length > 0 && !loading.show"
         :notes="notes"
       />
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button @click="router.push({ name: 'newNote' })">
-          <ion-icon :icon="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
     </ion-content>
   </ion-page>
 </template>
