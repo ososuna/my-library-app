@@ -26,7 +26,7 @@ const APP_NAME = process.env.VUE_APP_NAME;
 
 const { loggedUserId } = useAuth();
 const { deleteBook, getBooksByUser } = useBook();
-const { openConfirmModal, setLoading } = useUi();
+const { loading, openConfirmModal, setLoading } = useUi();
 const router = useRouter();
 const booksLoaded = ref(false);
 
@@ -103,6 +103,7 @@ onMounted(async() => {
         </ion-toolbar>
       </ion-header>
       <ListBookComponent
+        v-if="books?.length > 0 && !loading.show"
         :books="books"
         @onClick="onClick"
         @onDelete="saveDeleteBook"

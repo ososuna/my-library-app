@@ -51,7 +51,7 @@ onUpdated(() => {
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-icon @click="router.go(-1)" slot="icon-only" :icon="arrowBack"></ion-icon>
+          <ion-icon @click="router.push({ name: 'note', params: { bookId: route.params['bookId'] } })" slot="icon-only" :icon="arrowBack"></ion-icon>
         </ion-buttons>
         <ion-buttons slot="end">
           <ion-icon @click="saveNote" slot="icon-only" :icon="save" color="primary"></ion-icon>

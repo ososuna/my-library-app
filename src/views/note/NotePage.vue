@@ -47,7 +47,7 @@ const loadNotes = async() => {
 init();
 
 onUpdated(() => {
-  loadNotes();
+  if (route.params['bookId']) loadNotes();
 });
 
 </script>
@@ -56,7 +56,7 @@ onUpdated(() => {
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-icon @click="router.go(-1)" slot="icon-only" :icon="arrowBack"></ion-icon>
+          <ion-icon @click="router.push({ name: 'home' })" slot="icon-only" :icon="arrowBack"></ion-icon>
         </ion-buttons>
         <ion-buttons slot="end">
           <ion-icon @click="router.push({ name: 'newNote', params: {bookId: route.params['bookId']} })" slot="icon-only" :icon="add"></ion-icon>
@@ -71,7 +71,7 @@ onUpdated(() => {
         </ion-toolbar>
       </ion-header>
       <ListNoteComponent
-        v-if="notes.length > 0 && !loading.show"
+        v-if="notes?.length > 0 && !loading.show"
         :notes="notes"
       />
     </ion-content>
