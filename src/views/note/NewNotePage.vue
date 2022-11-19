@@ -15,10 +15,14 @@ import {
 } from '@ionic/vue';
 import { arrowBack, save } from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { ref, onUpdated } from 'vue';
+import { useNote } from '@/hooks/useNote';
+import { useUi } from '@/hooks/useUi';
 
 const route = useRoute();
 const router = useRouter();
+const { createNote } = useNote();
+const { setAlertMessage } = useUi();
 
 const newNoteForm = ref({
   name: '',
@@ -26,9 +30,19 @@ const newNoteForm = ref({
   bookId: Number(route.params['bookId'])
 });
 
-const saveNote = () => {
-  console.log(newNoteForm.value);
+const saveNote = async() => {
+  const { ok, message } = await createNote(newNoteForm.value);
+  setAlertMessage(message);
+  if (ok) router.push({ name: 'note', params: { bookId: route.params['bookId'] }});
 };
+
+onUpdated(() => {
+  newNoteForm.value = {
+    name: '',
+    description: '',
+    bookId: Number(route.params['bookId'])
+  };
+});
 
 </script>
 

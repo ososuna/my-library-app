@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onUpdated, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
   IonToolbar,
@@ -45,6 +45,10 @@ const loadNotes = async() => {
 };
 
 init();
+
+onUpdated(() => {
+  loadNotes();
+});
 
 </script>
 <template>
