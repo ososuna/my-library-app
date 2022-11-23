@@ -23,7 +23,7 @@ import UpdateNoteDto from '@/models/dto/UpdateNoteDto';
 const { deleteNote, getNoteById, updateNote } = useNote();
 const route = useRoute();
 const router = useRouter();
-const { loading, setAlertMessage, setLoading } = useUi();
+const { loading, openConfirmModal, setAlertMessage, setLoading } = useUi();
 
 const updateNoteForm = ref({
   name: '',
@@ -54,6 +54,8 @@ const loadNote = async () => {
 };
 
 const saveDeleteNote = async() => {
+  const decision = await openConfirmModal('Are you sure you want to delete this book?');
+  if (!decision) return;
   const { ok, message } = await deleteNote(Number(route.params['id']));
   setAlertMessage(message);
   if (ok) router.go(-1);
