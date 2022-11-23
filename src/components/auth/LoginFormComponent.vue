@@ -30,7 +30,7 @@ const onSubmit = async() => {
     setAlertMessage( message );
     return;
   }
-  router.push({ name: 'home' });
+  router.push({ name: 'book' });
 };
 
 </script>

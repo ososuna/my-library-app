@@ -34,7 +34,7 @@ const menuItems = ref([
     icon: settingsOutline
   },
   {
-    title: 'Logout',
+    title: 'Log out',
     pathName: 'logout',
     icon: logOutOutline
   }

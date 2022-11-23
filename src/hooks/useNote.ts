@@ -1,11 +1,25 @@
 import axios from 'axios';
-import bookApi from '@/api/bookApi';
-import BookDto from '@/models/dto/BookDto';
+import noteApi from '@/api/noteApi';
+import NewNoteDto from '@/models/dto/NewNoteDto';
+import UpdateNoteDto from '@/models/dto/UpdateNoteDto';
 
-export const useBook = () => {
-  const getBooks = async() => {
+export const useNote = () => { 
+  const getNotesByBookId = async(bookId: number) => {
     try {
-      const { data } = await bookApi.get('/all');
+      const { data } = await noteApi.get(`/book/${bookId}`);
+      return { ok: true, data };
+    } catch ( error ) {
+      if ( axios.isAxiosError( error ) ) {
+        const { message } = error.response?.data as any || 'An error has occurred';
+        return { ok: false, message };
+      } else {
+        return { ok: false, message: 'An error has occurred' };
+      }
+    }   
+  }
+  const getNoteById = async( id: number ) => {
+    try {
+      const { data } = await noteApi.get(`/${id}`);
       return { ok: true, data };
     } catch ( error ) {
       if ( axios.isAxiosError( error ) ) {
@@ -16,37 +30,10 @@ export const useBook = () => {
       }
     }
   }
-  const getBookById = async( id: number ) => {
+  const createNote = async(note: NewNoteDto) => {
     try {
-      const { data } = await bookApi.get(`/${id}`);
-      return { ok: true, data };
-    } catch ( error ) {
-      if ( axios.isAxiosError( error ) ) {
-        const { message } = error.response?.data as any || 'An error has occurred';
-        return { ok: false, message };
-      } else {
-        return { ok: false, message: 'An error has occurred' };
-      }
-    }
-  }
-  const getBooksByUser = async( userId: number ) => {
-    try {
-      const { data } = await bookApi.get(`/user/${userId}`);
-      return { ok: true, data };
-    } catch ( error ) {
-      if ( axios.isAxiosError( error ) ) {
-        const { message } = error.response?.data as any || 'An error has occurred';
-        return { ok: false, message };
-      } else {
-        return { ok: false, message: 'An error has occurred' };
-      }
-    }
-  }
-
-  const createBook = async( book: BookDto ) => {
-    try {
-      await bookApi.post('', book);
-      return { ok: true, message: 'The book has been created &#129303' }
+      await noteApi.post('', note);
+      return { ok: true, message: 'The note has been created &#129303' }
     } catch ( error ) {
       if ( axios.isAxiosError( error ) ) {
         const { message } = error.response?.data as any || 'An error has occurred';
@@ -56,10 +43,10 @@ export const useBook = () => {
       }
     }
   }
-  const updateBook = async( id: number, book: BookDto ) => {
+  const updateNote = async( id: number, note: UpdateNoteDto ) => {
     try {
-      await bookApi.put(`/${id}`, book);
-      return { ok: true, message: 'The book has been updated &#129303' }
+      await noteApi.put(`/${id}`, note);
+      return { ok: true, message: 'The note has been updated &#129303' }
     } catch ( error ) {
       if ( axios.isAxiosError( error ) ) {
         const { message } = error.response?.data as any || 'An error has occurred';
@@ -69,10 +56,10 @@ export const useBook = () => {
       }
     }
   }
-  const deleteBook = async( id: number ) => {
+  const deleteNote = async( id: number ) => {
     try {
-      await bookApi.delete(`/${id}`);
-      return { ok: true, message: 'The book has been deleted' }
+      await noteApi.delete(`/${id}`);
+      return { ok: true, message: 'The note has been deleted' }
     } catch ( error ) {
       if ( axios.isAxiosError( error ) ) {
         const { message } = error.response?.data as any || 'An error has occurred';
@@ -83,11 +70,10 @@ export const useBook = () => {
     }
   }
   return {
-    getBookById,
-    getBooksByUser,
-    getBooks,
-    createBook,
-    updateBook,
-    deleteBook
+    getNotesByBookId,
+    getNoteById,
+    createNote,
+    deleteNote,
+    updateNote
   }
 }
