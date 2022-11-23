@@ -11,9 +11,7 @@ import {
 import { useRoute, useRouter } from 'vue-router';
 
 const APP_NAME = process.env.VUE_APP_NAME;
-
 const route = useRoute();
-
 const router = useRouter();
 
 </script>
