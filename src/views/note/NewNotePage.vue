@@ -32,6 +32,10 @@ const newNoteForm = ref({
 } as NewNoteDto);
 
 const saveNote = async() => {
+  if (newNoteForm.value.name.trim() === '') {
+    setAlertMessage('Title is required');
+    return;
+  }
   const { ok, message } = await createNote(newNoteForm.value);
   setAlertMessage(message);
   if (ok) router.push({ name: 'note', params: { bookId: route.params['bookId'] }});

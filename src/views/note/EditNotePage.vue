@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onUpdated } from 'vue';
+import { ref } from 'vue';
 import {
   IonButtons,
   IonContent,
@@ -60,6 +60,10 @@ const saveDeleteNote = async() => {
 }
 
 const saveUpdateNote = async() => {
+  if (updateNoteForm.value.name.trim() === '') {
+    setAlertMessage('Title is required');
+    return;
+  }
   if (!(updateNoteForm.value.name === originalNote.value.name && updateNoteForm.value.description === originalNote.value.description)) {
     const { message } = await updateNote(Number(route.params['id']), updateNoteForm.value);
     setAlertMessage(message);
@@ -85,7 +89,7 @@ init();
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <div v-if="(updateNoteForm.name!=='')&&(updateNoteForm.description!=='')&&(!loading.show)">
+      <div v-if="(originalNote.name!=='')&&(originalNote.description!=='')&&(!loading.show)">
         <ion-list class="ion-margin-top">
           <ion-item>
             <ion-label position="stacked">Title</ion-label>
