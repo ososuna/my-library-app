@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { defineEmits, defineProps, PropType } from 'vue';
-import { IonText } from '@ionic/vue';
 import CardBookComponent from '@/components/book/CardBookComponent.vue';
+import NoRecordsMessageComponent from '@/components/shared/NoRecordsMessageComponent.vue';
 import { useUi } from '@/hooks/useUi';
 import Book from '@/models/Book';
+import { defineEmits, defineProps, PropType } from 'vue';
 defineProps({
   books: {
     type: Array as PropType<Book[]>,
@@ -14,11 +14,7 @@ const emit = defineEmits(['onClick', 'onDelete', 'onUpdate']);
 const { loading } = useUi();
 </script>
 <template>
-  <div v-if="(books.length===0)&&(!loading.show)" class="ion-text-center">
-    <ion-text color="medium">
-      <h4 color="medium">No books registered</h4>
-    </ion-text>
-  </div>
+  <NoRecordsMessageComponent entity="books" v-if="(books.length===0)&&(!loading.show)" />
   <CardBookComponent
     v-else
     v-for="(book, index) in books"

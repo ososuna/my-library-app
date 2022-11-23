@@ -22,7 +22,7 @@ const { getBookById } = useBook();
 const { getNotesByBookId } = useNote();
 const route = useRoute();
 const router = useRouter();
-const { loading, setLoading } = useUi();
+const { setLoading } = useUi();
 
 const book = ref({} as Book);
 const notes = ref([] as Note[]);
@@ -75,7 +75,6 @@ onUpdated(() => {
         </ion-toolbar>
       </ion-header>
       <ListNoteComponent
-        v-if="notes?.length > 0 && !loading.show"
         :notes="notes"
         @onClick="onClick"
       />
