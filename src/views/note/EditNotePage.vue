@@ -91,7 +91,7 @@ init();
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <div v-if="(originalNote.name!=='')&&(originalNote.description!=='')&&(!loading.show)">
+      <div v-if="!loading.show">
         <ion-list class="ion-margin-top">
           <ion-item>
             <ion-label position="stacked">Title</ion-label>
