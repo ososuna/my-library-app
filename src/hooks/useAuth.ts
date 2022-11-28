@@ -31,6 +31,7 @@ export const useAuth = () => {
     logout,
     currentAuthState: computed(()=>store.getters['auth/currentState']),
     loggedUserId: computed(()=>store.getters['auth/loggedUserId']),
+    loggedUserProfileImageUrl: computed(()=>store.getters['auth/loggedUserProfileImageUrl']),
     loggedUser: computed(()=>store.getters['auth/loggedUser'])
   }
 

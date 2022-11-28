@@ -12,6 +12,7 @@ import {
   IonFab,
   IonMenuButton,
   IonButtons,
+  IonAvatar,
   modalController
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
@@ -24,13 +25,16 @@ import Book from '@/models/Book';
 
 const APP_NAME = process.env.VUE_APP_NAME;
 
-const { loggedUserId } = useAuth();
+const { loggedUserId, loggedUserProfileImageUrl } = useAuth();
 const { deleteBook, getBooksByUser } = useBook();
 const { openConfirmModal, setLoading } = useUi();
 const router = useRouter();
-const booksLoaded = ref(false);
 
 const books = ref<Book[]>([]);
+
+const getAvatarSrc = () => {
+  return loggedUserProfileImageUrl.value || 'https://ionicframework.com/docs/img/demos/avatar.svg';
+}
 
 const init = async() => {
   setLoading(true, 'Loading books...');
@@ -41,7 +45,6 @@ const init = async() => {
 const loadBooks = async () => {
   const { ok, data } = await getBooksByUser( loggedUserId.value );
   if ( ok ) books.value = data;
-  booksLoaded.value = true;
 };
 
 const onSave = async() => {
@@ -94,6 +97,15 @@ init();
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-avatar>
+              <img          
+                alt="profile-photo"
+                :src="getAvatarSrc()"
+              />
+            
+          </ion-avatar>
         </ion-buttons>
         <ion-title>{{ APP_NAME }}</ion-title>
       </ion-toolbar>

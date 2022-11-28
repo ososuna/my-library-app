@@ -7,6 +7,11 @@ export const currentState = ( state: AuthState ) => {
 export const loggedUserId = ( state: AuthState ) => {
   return state.user?.id;
 }
+
+export const loggedUserProfileImageUrl = ( state: AuthState ) => {
+  return state.user?.profileImageUrl;
+}
+
 export const loggedUser = ( state: AuthState ) => {
   return state.user;
 }
