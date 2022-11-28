@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onUpdated } from 'vue';
 import { useRouter } from 'vue-router';
 import {
   IonContent,
@@ -81,8 +81,8 @@ const onClick = (book: Book) => {
   router.push({ name: 'note', params: { bookId: book.id } });
 };
 
-onMounted(async() => {
-  await init();
+onUpdated(() => {
+  init();
 });
 
 </script>
