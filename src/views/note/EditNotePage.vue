@@ -54,7 +54,7 @@ const loadNote = async () => {
 };
 
 const saveDeleteNote = async() => {
-  const decision = await openConfirmModal('Are you sure you want to delete this book?');
+  const decision = await openConfirmModal('Are you sure you want to delete this note?');
   if (!decision) return;
   const { ok, message } = await deleteNote(Number(route.params['id']));
   setAlertMessage(message);
