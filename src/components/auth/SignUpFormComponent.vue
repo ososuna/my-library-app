@@ -13,12 +13,15 @@ import {
 import { useRouter } from 'vue-router';
 import { validateEmail } from '@/helpers/validateEmail';
 import { useAuth } from '@/hooks/useAuth';
+import { useEmail } from '@/hooks/useEmail';
 import { useUi } from '@/hooks/useUi';
+import EmailDetails from '@/models/email/EmailDetails';
 import Role from '@/models/auth/Role';
 import SignUpForm from '@/models/ui/SignUpForm';
 
 const { createUser } = useAuth();
 const { setAlertMessage } = useUi();
+const { sendEmail } = useEmail();
 const router = useRouter();
 
 const signUpForm = ref({
@@ -92,6 +95,11 @@ const onSubmit = async() => {
     setAlertMessage(message);
     return;
   }
+  await sendEmail({
+    recipient: signUpRequest.email,
+    subject: 'Welcome to the Spring Book app!',
+    msgBody: 'Thank you for registering to Spring Book app. Happy reading :).'
+  } as EmailDetails);
   router.push({ name: 'book' });
 }
 
