@@ -30,23 +30,28 @@ const router = useRouter();
       </ion-header>
       <router-view />
     </ion-content>
-    <ion-footer>
-    <ion-toolbar>
-      <ion-title size="small">
-        <ion-text v-if="route.name==='log-in'">
-          Don't have an account?
-          <ion-text color="primary" @click="router.push({ name: 'sign-up' })">
-            Sign up
-          </ion-text>
+    <ion-footer class="ion-no-border">
+      <div>
+        <ion-text class="ion-text-center">
+          <p>Powered by <a href="https://ososuna.dev" target="_blank"> <img src="../../assets/ososuna.jpg" alt="ososuna"> </a> </p>
         </ion-text>
-        <ion-text v-else-if="route.name==='sign-up'">
-          Already have an account?
-          <ion-text color="primary" @click="router.push({ name: 'log-in' })">
-            Log in
+      </div>
+      <ion-toolbar>
+        <ion-title size="small">
+          <ion-text v-if="route.name==='log-in'">
+            Don't have an account?
+            <ion-text color="primary" @click="router.push({ name: 'sign-up' })">
+              Sign up
+            </ion-text>
           </ion-text>
-        </ion-text>
-      </ion-title>
-    </ion-toolbar>
-  </ion-footer>
+          <ion-text v-else-if="route.name==='sign-up'">
+            Already have an account?
+            <ion-text color="primary" @click="router.push({ name: 'log-in' })">
+              Log in
+            </ion-text>
+          </ion-text>
+        </ion-title>
+      </ion-toolbar>
+    </ion-footer>
   </ion-page>
 </template>
