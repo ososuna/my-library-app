@@ -82,8 +82,10 @@ const onClick = (book: Book) => {
 };
 
 onUpdated(() => {
-  init();
+  loadBooks();
 });
+
+init();
 
 </script>
 <template>
