@@ -33,7 +33,7 @@ const router = useRouter();
     <ion-footer class="ion-no-border">
       <div>
         <ion-text class="ion-text-center">
-          <p>Powered by <a href="https://ososuna.dev" target="_blank"> <img src="../../assets/ososuna.jpg" alt="ososuna"> </a> </p>
+          <p>Powered by <a href="https://ososuna.dev" target="_blank"> <img style="width: 2.5rem;" src="../../assets/ososuna.jpg" alt="ososuna"> </a> </p>
         </ion-text>
       </div>
       <ion-toolbar>
